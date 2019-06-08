@@ -1,0 +1,67 @@
+@font-face {
+    font-family: AdihausDIN;
+    src: url("../fonts/AdihausDIN.otf");
+}
+*{
+    margin: 0;
+    padding: 0;
+    font-family: AdihausDIN;
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
+.container{
+    width:800px;
+    margin:auto;
+}
+.reception, .drinks{
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    margin-top: 20px;
+}
+ul.coins{
+    list-style: none;
+    display: flex;
+}
+ul.coins li.coin{
+    margin: 10px;
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 20px;
+    text-align: center;
+    height: 22px;
+    cursor: pointer;
+}
+.sum{
+    margin-right: 20px;
+}
+
+.drinks{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.drink{
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 100px;
+    flex-basis: 42%;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: space-between;
+}
+.drink img{
+    height: 100px;
+}
+.name-drink{
+    margin-left: 20px;
+    font-size: 28px;
+}
