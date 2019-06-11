@@ -17,4 +17,18 @@ switch($_GET['get']){
         echo json_encode($drinks, JSON_UNESCAPED_UNICODE);
 
         break;
+    case 'coins':
+
+        $sql = "SELECT * FROM coins";
+        $res = $link->query($sql);
+
+        $coins = [];
+
+        while($row = $res->fetch(PDO::FETCH_ASSOC)){
+            $coins[$row['name']] = $row['count'];
+        }
+
+        echo json_encode($coins, JSON_UNESCAPED_UNICODE);
+
+        break;
 }

@@ -1,8 +1,13 @@
 var drinks = [];
 
+var coins = {
+    one: 0,
+    two: 0,
+    five: 0,
+    ten: 0,
+};
 
-
-var coins = 0;
+var balance = 0;
 
 $( document ).ready(function(){
 
@@ -10,31 +15,89 @@ $( document ).ready(function(){
 
 
     $('#coin_one').on('click', function(){
-        add_coins(1);
+        if(coins.one-1 >= 0) {
+            coins.one--;
+            render_coins();
+            add_coins(1);
+        }
     });
     $('#coin_two').on('click', function(){
-        add_coins(2);
+        if(coins.two-1 >= 0) {
+            coins.two--;
+            render_coins();
+            add_coins(2);
+        }
     });
     $('#coin_five').on('click', function(){
-        add_coins(5);
+        if(coins.five-1 >= 0) {
+            coins.five--;
+            render_coins();
+            add_coins(5);
+        }
     });
     $('#coin_ten').on('click', function(){
-        add_coins(10);
+        if(coins.ten-1 >= 0) {
+            coins.ten--;
+            render_coins();
+            add_coins(10);
+        }
     });
+
+    $('#change').on('click', function(){
+        getChange();
+    });
+
 });
+
+function getChange(){
+    count_ten = Math.floor(balance/10);
+    balance -= count_ten*10;
+    if(count_ten>0) {
+        coins.ten = +coins.ten + count_ten;
+    }
+
+    count_five = Math.floor(balance/5);
+    balance -= count_five*5;
+    if(count_five>0) {
+        coins.five = +coins.five + count_five;
+    }
+
+    count_two = Math.floor(balance/2);
+    balance -= count_two*2;
+    if(count_two>0) {
+        coins.two = +coins.two + count_two;
+    }
+
+    count_one = Math.floor(balance);
+    balance -= count_one;
+    if(count_one>0) {
+        coins.one = +coins.one + Number(count_one);
+    }
+
+    render_coins();
+    add_coins(0);
+}
+
 function add_coins(count) {
-    coins+=count;
-    $('#sum').html(coins);
+    balance+=Number(count);
+    $('#sum').html(balance);
 }
 
 function buy(id){
-    if(coins - drinks[id].price >= 0) {
+    if(balance - drinks[id].price >= 0) {
         drinks[id].count--;
         add_coins(-drinks[id].price);
     }
     else{
         alert('Недостаточно средств!');
     }
+}
+
+function render_coins(){
+    one.innerHTML = coins.one;
+    two.innerHTML = coins.two;
+    five.innerHTML = coins.five;
+    ten.innerHTML = coins.ten;
 }
 
 function render_drinks(){
@@ -88,6 +151,18 @@ function getDrinks(){
     });
 }
 
+function getCoins(){
+    $.ajax({
+        url: 'server.php',
+        type: 'get',
+        data: 'get=coins',
+    }).done(function(data){
+        coins = data;
+        render_coins();
+    });
+}
+
 function init(){
     getDrinks();
+    getCoins();
 }
